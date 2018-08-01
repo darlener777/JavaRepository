@@ -1,0 +1,28 @@
+package com.company;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        // an array that stores numbers into fibNumber as long as its less than 20
+        long[] fibNumber = new long[20];
+
+        // create 1st two elements
+        fibNumber[0] = 0;
+        fibNumber[1] = 1;
+
+        // create the fibnoacci sequence and store it in an array
+        for(int counter = 2; counter < fibNumber.length; counter++)
+        {
+            fibNumber[counter] = fibNumber[counter -1] + fibNumber[counter - 2];
+        }
+
+        // print the series of numbers
+        System.out.println("Fibonacci series up to " + fibNumber.length);
+        for(int counter = 0; counter < fibNumber.length; counter++)
+        {
+            System.out.println(fibNumber[counter] + " ");
+        }
+
+    }
+}
