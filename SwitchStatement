@@ -1,3 +1,5 @@
+/* USE INT AND CHAR SWITCH STATEMENTS ALONG WITH TOUPPERCASE AND TOLOWERCASE */
+
 package com.company;
 import java.util.Scanner;
 
