@@ -1,0 +1,40 @@
+package com.company;
+
+public class Main
+{
+
+    public static void main(String[] args)
+    {
+        double centimeters = calcFeetAndInchesToCentimeters(11,12);
+        if(centimeters < 0.0)
+            System.out.println("Invalid parameters");
+
+        calcFeetAndInchesToCentimeters(100);
+    }
+
+    public static double calcFeetAndInchesToCentimeters(double feet, double inches)
+    {
+        if(feet < 0 || inches < 0 || inches > 12)
+        {
+            System.out.println("Invalid response");
+            return -1;
+        }
+
+        double centimeters = (feet * 12) * 2.54;
+        centimeters += inches * 2.54;
+        System.out.printf("%.2f feet %.2f inches = %.2f cm\n", feet,inches,centimeters);
+        return centimeters;
+    }
+
+    public static double calcFeetAndInchesToCentimeters(double inches)
+    {
+        if(inches < 0)
+            return -1;
+
+        // makes rue inches is converted to a integer
+        double feet = (int)inches / 12;
+        double remainingInches = (int) inches % 12;
+        System.out.printf("%.2f inches is equal to %.2f feet and %.2f inches\n", inches, feet, remainingInches);
+        return calcFeetAndInchesToCentimeters(feet,remainingInches);
+    }
+}
