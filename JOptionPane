@@ -1,0 +1,21 @@
+package joptionpane;
+
+import java.util.Scanner;
+import javax.swing.JOptionPane; // to access pop up boxes 
+
+public class JOptionPane;
+{
+  public static void main(String[] args)
+  {
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Enter course name: ");
+    
+    // pop up box 
+    JOptionPane.showMessageDialog(null, "Welcome to Java\n");
+    
+    // pop up box to get userInput
+    String name = JOptionPane.showInputDialog("What's your name"); // stores name
+    String message = String.format("Welcome to Java Programming %s", name); // stores message
+    JOptionPane.showMessageDialog(null, message);
+  }
+}
