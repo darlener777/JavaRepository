@@ -1,0 +1,173 @@
+package com.company;
+
+class Car
+{
+    private boolean engine;
+    private int cylinders;
+    private int wheels;
+    private String name;
+
+    public Car(int cylinders, String name)
+    {
+        this.cylinders = cylinders;
+        this.name = name;
+        this.wheels = 4;
+        this.engine = true;
+    }
+
+    public void startEngine()
+    {
+        System.out.println("Starting engine(car class)");
+    }
+
+    public void accelerate()
+    {
+        System.out.println("Accelerating...(car class)");
+    }
+
+    public void brake()
+    {
+        System.out.println("Breaking...(car class)");
+    }
+
+    public String toString()
+    {
+        return String.format("Engine: %b\nCylinders: %d\nWheels: %d\nName: %s", engine,cylinders,wheels,name);
+    }
+}
+
+class Honda extends Car
+{
+    private String make;
+
+    public Honda(int cylinders, String name)
+    {
+        super(cylinders, name);
+        this.make = "Civic";
+    }
+
+    @Override
+    public void startEngine()
+    {
+        super.startEngine();
+        System.out.println("HONDA ENGINE STARTED");
+    }
+
+    @Override
+    public void accelerate()
+    {
+        System.out.println("HONDA IS ACCELERATING");
+    }
+
+    @Override
+    public void brake()
+    {
+        System.out.println("HONDA IS BRAKING");
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format(super.toString() + "\nMake: %s", make);
+    }
+}
+
+class BMW extends Car
+{
+    private String make;
+
+    public BMW(int cylinders, String name)
+    {
+        super(cylinders,name);
+        this.make = "I-8";
+    }
+
+    @Override
+    public void startEngine()
+    {
+        System.out.println("BMW ENGINE STARTED");
+    }
+
+    @Override
+    public void accelerate()
+    {
+        super.accelerate();
+        System.out.println("BMW IS ACCELERATING");
+    }
+
+    @Override
+    public void brake()
+    {
+        System.out.println("BMW IS BRAKING");
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format(super.toString() + "\nMake: %s", make);
+    }
+}
+
+class Chevrolet extends Car
+{
+    private String make;
+
+    public Chevrolet(int cylinders,String make)
+    {
+        super(10,"Chevrolet");
+        this.make = "Camaro";
+    }
+
+    @Override
+    public void startEngine()
+    {
+        super.startEngine();
+        System.out.println("CAMARO ENGINE STARTING");
+    }
+
+    @Override
+    public void accelerate()
+    {
+        super.accelerate();
+        System.out.println("CAMARO ACCELERATING");
+    }
+
+    @Override
+    public void brake()
+    {
+        super.brake();
+        System.out.println("CAMARO BRAKING");
+    }
+
+    @Override
+    public String toString()
+    {
+        return super.toString();
+    }
+}
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Car c1 = new Car(4,"Car");
+        System.out.println(c1);
+        c1.startEngine();
+        c1.accelerate();
+        c1.brake();
+        System.out.println();
+
+        Honda h1 = new Honda(6,"Honda");
+        System.out.println(h1);
+        h1.startEngine();
+        h1.accelerate();
+        h1.brake();
+        System.out.println();
+
+        BMW b1 = new BMW(8,"BMW");
+        System.out.println(b1);
+        b1.startEngine();
+        b1.accelerate();
+        b1.brake();
+    }
+}
