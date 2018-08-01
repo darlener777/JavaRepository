@@ -1,0 +1,54 @@
+package com.company;
+import java.util.Scanner;
+
+public class Main
+{
+    private static Scanner scanner = new Scanner(System.in);
+
+    // an array with 10 elements
+    private static int[] myArray = new int[10];
+
+    public static void main(String[] args)
+    {
+        System.out.println("Enter 10 integers: ");
+        getInput();
+        printArray(myArray);
+
+        resizeArray();
+        System.out.println("Enter 12 integers: ");
+        getInput();
+
+        // hard saves these 2 elements into 12 element array
+        myArray[10] = 67;
+        myArray[11] = 70;
+        printArray(myArray);
+    }
+
+    // get data and save into array
+    private static void getInput()
+    {
+        for(int counter = 0; counter < myArray.length; counter++)
+        {
+            myArray[counter] = scanner.nextInt(); // gets users input and stores them in arrya
+        }
+    }
+
+    // prints array and its' contents
+    private static void printArray(int[] array)
+    {
+        for(int counter = 0; counter < array.length; counter++)
+            System.out.println(array[counter] + " ");
+        System.out.println();
+    }
+
+    // take a copy of the original array and create a new array // change the size
+    private static void resizeArray()
+    {
+        // save original array into a variable
+        int[] originalArray = myArray;
+
+        myArray = new int[12]; // now has 12 allocated memory spots
+        for(int counter = 0; counter < originalArray.length; counter++)
+            myArray[counter] = originalArray[counter];
+    }
+}
