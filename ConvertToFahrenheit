@@ -1,0 +1,58 @@
+package com.company;
+import java.util.Scanner;
+
+public class Main
+{
+    // function to convert to Fahrenheit
+    public static double convertToFahrenheit(double celsius)
+    {
+        double result;
+        
+        result = 1.8 * celsius + 32; // conversion equation
+        return result;
+    }
+    
+    // function to convert to Celsius
+    public static double convertToCelsius(double fahrenheit)
+    {
+        double result;
+
+        result = (fahrenheit - 32) * 5 / 9; // conversion equation
+        return result;
+    }
+    
+    public static void main(String[] args)
+    {
+        double celsius, fahrenheit, result;
+        Scanner scanner = new Scanner(System.in);
+        int userInput;
+        
+        do 
+        {
+           // main menu 
+            System.out.println("Enter 1 to convert from Celsius to Fahrenheit");
+            System.out.println("Enter 2 to convert from Fahrenheit to Celsius");
+            System.out.println("Enter 3 to exit");
+            System.out.println("Choice: ");
+            userInput = scanner.nextInt();
+            
+            switch(userInput)
+            {
+                case 1:
+                    System.out.println("Enter Celsius");
+                    celsius = scanner.nextDouble(); // stores in celsius
+                    result = convertToFahrenheit(celsius); // convert and store in result
+                    System.out.println(result);
+                    break;
+                case 2:
+                    System.out.println("Enter Fahrenheit");
+                    fahrenheit = scanner.nextDouble(); // store in fahrenheit
+                    result = convertToCelsius(fahrenheit); // convert and store in result 
+                    System.out.println(result);
+                    break; 
+                default:
+                    System.out.println("Have a nice day!");
+            }
+        } while(userInput != 3); // if choice equals 3 exit
+    }
+}
