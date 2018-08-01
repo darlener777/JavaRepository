@@ -1,0 +1,25 @@
+package com.company;
+import java.util.Scanner;
+
+// ASK THE USER FOR AN INTEGER GRADE BETWEEN 0 AND 100 INCLUSIVE AND SHOW THE LETTER GRADE THAT CORRESPONDS 
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+	    System.out.println("Enter and integer grade between 0 - 100 inclusive");
+	    Scanner scanner = new Scanner(System.in);
+	    int userInput = scanner.nextInt();
+
+	    if(userInput >= 90)
+            System.out.println("You received an A");
+        else if(userInput >= 80)
+            System.out.println("You received a B");
+        else if(userInput >= 70)
+            System.out.println("You received a C");
+        else if(userInput >= 60)
+            System.out.println("You received a D");
+        else
+            System.out.println("You received an F");
+    }
+}
