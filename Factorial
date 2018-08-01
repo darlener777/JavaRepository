@@ -1,0 +1,21 @@
+package com.company;
+import java.util.Scanner;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        int factorial = 1; // factorial has to start at 1 since anything * 0 = 0
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter a number between 0 - 8 inclusive");
+        int userInput = scanner.nextInt();
+
+        // put curly braces around for loop so it prints the factorial once otherwise it will print it after each iteration
+        {
+            for(int counter = 1; counter <= userInput; counter++)
+                factorial *= counter;
+                System.out.printf("The factorial of %d is %d\n", userInput,factorial);
+        }
+    }
+}
