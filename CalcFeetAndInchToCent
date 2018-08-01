@@ -1,3 +1,5 @@
+/* CONVERTS FEET AND INCHES TO CENTIMETERS */
+
 package com.company;
 
 public class Main
