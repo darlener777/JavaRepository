@@ -1,0 +1,36 @@
+/* CALCULATES HOW MANY TOTAL EVEN NUMBERS THERE ARE IN A RANGE OF 2 HARD CODED NUMBERS */
+
+package com.company;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        int number = 0;
+        int finishedNumber = 26;
+        int totalEvenNumbers = 0;
+
+        // start at 0 and finish at 26
+        while(number <= finishedNumber)
+        {
+            // if it isnt an even number we increment that number and continue the numbers to start on the next number
+            if(!isEvenNumber(number))
+            {
+                number++;
+                continue;
+            }
+
+            // executes if there is an even number
+            totalEvenNumbers++;
+            System.out.println("Even number: " + number);
+            number++;
+        }
+        System.out.println("Total even numbers found = " + totalEvenNumbers);
+    }
+
+    public static boolean isEvenNumber(int number)
+    {
+        return(number % 2) == 0; // only return even numbers
+    }
+
+}
