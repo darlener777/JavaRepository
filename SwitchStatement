@@ -1,0 +1,95 @@
+package com.company;
+import java.util.Scanner;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a number: ");
+        int userInput = scanner.nextInt();
+
+        switch(userInput)
+        {
+            case 1:
+                System.out.println("Value = 1");
+                break;
+            case 2:
+                System.out.println("Value = 2");
+                break;
+            case 3: case 4: case 5:
+            {
+                System.out.println("Value was higher than 2");
+                System.out.printf("Value was %d\n", userInput);
+                break;
+            }
+            default:
+                System.out.println("Value was higher than 5");
+        }
+
+
+        // switch statement using char
+        char variable = 'D';
+        switch (variable)
+        {
+            case 'A': case 'B': case 'C': case 'D':
+                System.out.println("It was a " + variable);
+                break;
+            default:
+                System.out.println("Not found");
+        }
+
+        // using toUpperCase in switch statement to avoid errors
+        String month = "JANuarY";
+        // converts it to upper case
+        switch(month.toUpperCase())
+        {
+            case "JANUARY":
+                System.out.println("Month is January");
+                break;
+            case "FEBRUARY":
+                System.out.println("Month is February");
+                break;
+            case "MARCH":
+                System.out.println("Month is March");
+                break;
+            case "APRIL":
+                System.out.println("Month is April");
+                break;
+            case "MAY":
+                System.out.println("Month is May");
+                break;
+            case "JUNE":
+                System.out.println("Month is June");
+                break;
+            default:
+                System.out.println("Month is after June");
+        }
+
+        String month2 = "JUne";
+        // converts it to upper case
+        switch(month2.toLowerCase())
+        {
+            case "january":
+                System.out.println("Month is January");
+                break;
+            case "february":
+                System.out.println("Month is February");
+                break;
+            case "march":
+                System.out.println("Month is March");
+                break;
+            case "april":
+                System.out.println("Month is April");
+                break;
+            case "may":
+                System.out.println("Month is May");
+                break;
+            case "june":
+                System.out.println("Month is June");
+                break;
+            default:
+                System.out.println("Month is after June");
+        }
+    }
+}
