@@ -1,0 +1,22 @@
+/* OBTAIN AND DISPLAY USER INPUT USING JOPTIONPANE */
+
+package com.company;
+import javax.swing.JOptionPane;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        // creates pop up user input boxes
+        String number1 = JOptionPane.showInputDialog("Enter number 1: ");
+        String number2 = JOptionPane.showInputDialog("Enter number 2: ", "*******"); // placeholder
+
+        // stores the number into variables
+        int n1 = Integer.parseInt(number1);
+        int n2 = Integer.parseInt(number2);
+
+        // prints out the sum of the two numbers
+        System.out.println(n1 + n2);
+    }
+
+}
