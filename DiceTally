@@ -1,0 +1,88 @@
+/*  ROLL 2 6 SIDED DICE 600,000 TIMES AND DISPLAY THE FREQUENCY OF TIMES EACH NUMBER WAS ROLLED */
+
+package com.company;
+import java.util.Random;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        int result1, result2, finalResult;
+
+        // dont need a tally1 because its impossible to roll a 1 with dice
+        int tally2 = 0;
+        int tally3 = 0;
+        int tally4 = 0;
+        int tally5 = 0;
+        int tally6 = 0;
+        int tally7 = 0;
+        int tally8 = 0;
+        int tally9 = 0;
+        int tally10 = 0;
+        int tally11 = 0;
+        int tally12 = 0;
+
+        // random rolls
+        Random generator = new Random();
+
+        for(int counter = 0; counter < 600000; counter++)
+        {
+            result1 = generator.nextInt(6) + 1; // generates random number 1-6
+            result2 = generator.nextInt(6) + 1;
+            finalResult = result1 + result2;
+
+            // keep track of result1 and result2 by updating tally
+            switch(finalResult)
+            {
+                case 2:
+                    tally2++;
+                    break;
+                case 3:
+                    tally3++;
+                    break;
+                case 4:
+                    tally4++;
+                    break;
+                case 5:
+                    tally5++;
+                    break;
+                case 6:
+                    tally6++;
+                    break;
+                case 7:
+                    tally7++;
+                    break;
+                case 8:
+                    tally8++;
+                    break;
+                case 9:
+                    tally9++;
+                    break;
+                case 10:
+                    tally10++;
+                    break;
+                case 11:
+                    tally11++;
+                    break;
+                case 12:
+                    tally12++;
+                    break;
+                default:
+                     System.out.println("Error");
+            }
+        }
+
+        // show results by printing each tally's count
+        System.out.println("2: " + tally2);
+        System.out.println("3: " + tally3);
+        System.out.println("4: " + tally4);
+        System.out.println("5: " + tally5);
+        System.out.println("6: " + tally6);
+        System.out.println("7: " + tally7);
+        System.out.println("8: " + tally8);
+        System.out.println("9: " + tally9);
+        System.out.println("10: " + tally10);
+        System.out.println("11: " + tally11);
+        System.out.println("12: " + tally12);
+    }
+}
