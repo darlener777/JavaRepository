@@ -1,0 +1,47 @@
+/* CREATE ERROR MESSAGES CAUSED BY INPUT MISMATCH */
+
+package com.company;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class Main {
+
+    // function to find the quotient
+    public static int findQuotient(int n, int d)
+    {
+        return n / d;
+    }
+
+
+    public static void main(String[] args)
+    {
+        Scanner scanner = new Scanner(System.in);
+        boolean continueFlag = true;
+
+        do
+        {
+            try
+            {
+                System.out.println("Enter numerator: ");
+                int numerator = scanner.nextInt();
+                System.out.println("Enter denominator: ");
+                int denominator = scanner.nextInt();
+                int quotient = findQuotient(numerator , denominator);
+                System.out.println("Quotient is: " + quotient);
+                continueFlag = false;
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("Wrong data entry!!!");
+                System.out.println(e);
+                scanner.nextLine();
+            }
+            catch(Exception e)
+            {
+                System.out.println("Something is wrong");
+                System.out.println(e);
+            }
+        } while(continueFlag);
+        System.out.println("Bye");
+    }
+}
