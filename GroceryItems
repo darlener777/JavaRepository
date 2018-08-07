@@ -1,0 +1,111 @@
+/* CREATES GROCERY ITEM OBJECTS AND CHECKS IF THEY ARE EXPENSIVE OR INEXPENSIVE / HAVE AN EXPIRATION DATE USING SETTERS, GETTERS, AND PARAMAETERS */
+
+package com.company;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        GroceryItem item1 = new GroceryItem("Milk", 2.75, "10/12/2017");
+        if(item1.isExpensive(2.00)) // $2.75 > $2.00 so it's expensive
+            System.out.println(item1.getItemName() + " is expensive.");
+        else
+            System.out.println(item1.getItemName() + " is inexpensive.");
+
+        if(item1.hasExpDate() == true) // if it has a date
+            System.out.println(item1.getItemName() + " has an expiration date.");
+        else
+            System.out.println(item1.getItemName() + " does not have an expiration date.");
+
+        System.out.println();
+
+        GroceryItem item2 = new GroceryItem("Ice cream", 1.99);
+        if(item2.isExpensive(2.00)) // $1.99 < $2.00 so it's inexpensive
+            System.out.println(item2.getItemName() + " is expensive.");
+        else
+            System.out.println(item2.getItemName() + " is inexpensive.");
+
+        if(item1.hasExpDate() == true) // does not have an expiration date so is false
+            System.out.println(item2.getItemName() + " has an expiration date.");
+        else
+            System.out.println(item2.getItemName() + " does not have an expiration date.");
+    }
+}
+====================================================================================================================================================
+
+/* GROCERY ITEM CLASS */
+package com.company;
+
+public class GroceryItem
+{
+    private String itemName;
+    private double price;
+    private String expirationDate;
+
+
+    public GroceryItem()
+    {
+        itemName = "Not found";
+        price = 0.00;
+        expirationDate = "None";
+    }
+
+    public GroceryItem(String itemName, double price, String expirationDate)
+    {
+        this.itemName = itemName;
+        this.price = price;
+        this.expirationDate = expirationDate;
+    }
+
+    public GroceryItem(String itemName, double price)
+    {
+        this.itemName = itemName;
+        this.price = price;
+    }
+
+    // set and get methods for each function
+    public void setItemName(String itemName)
+    {
+        this.itemName = itemName;
+    }
+
+    public void setPrice(double price)
+    {
+        this.price = price;
+    }
+
+    public void setExpirationDate(String expirationDate)
+    {
+        this.expirationDate = expirationDate;
+    }
+
+    public String getItemName()
+    {
+        return itemName;
+    }
+
+    public double getPrice()
+    {
+        return price;
+    }
+
+    public String getExpirationDate()
+    {
+        return expirationDate;
+    }
+
+    // predicate method if grocery item is expensive
+    public boolean isExpensive(double givenPrice)
+    {
+        return(price > givenPrice); // expensive if price is more then the given price
+    }
+
+    // predicate method if grocery item has an expiration date
+    public boolean hasExpDate()
+    {
+        if(expirationDate == "")
+            return false;
+        else
+            return true;
+    }
+}
