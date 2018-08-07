@@ -1,0 +1,56 @@
+package com.company;
+public class Main
+{
+
+    public static void main(String[] args)
+    {
+        Time t1 = new Time();
+        System.out.println(t1.toMilitary()); // prints out 00:00:00 since we use default constructor
+
+        t1.setTime(13,23,6);
+        System.out.println(t1.toMilitary());
+    }
+}
+        
+============================================================================================
+        
+/* TIME CLASS */
+        
+package com.company;
+
+public class Time
+{
+    private int hour;
+    private int minute;
+    private int second;
+
+    public Time()
+    {
+        hour = 4;
+        minute = 30;
+        second = 1;
+    }
+
+    public Time(int hour, int minute, int second)
+    {
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+    }
+
+    public void setTime(int hour, int minute, int second)
+    {
+        // check all 3 times are correct
+        if(hour >= 0 && hour < 24)
+            if(minute >= 0 && minute < 60)
+                if(second >= 0 && second < 60)
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+    }
+
+    public String toMilitary()
+    {
+        return String.format("%02d: %02d: %02d", hour,minute,second);
+    }
+}
