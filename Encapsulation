@@ -1,0 +1,47 @@
+/*  USE ENCAPSULATION TO MAKE SURE THE FIELDS IN THE CLASS AREN'T ACCESSIBLE TO ANY OTHER OUTSIDE CLASSES */
+package com.company;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+       Player p1 = new Player("Dee", 50, "Sword");
+       System.out.println("Initial health is " + p1.getHealth());
+
+       p1.loseDamage(60);
+    }
+}
+
+============================================================================================================
+
+/* PLAYER CLASS */
+
+package com.company;
+
+public class Player
+{
+    private String name;
+    private int health;
+    private String weapon;
+
+    public Player(String name, int health, String weapon)
+    {
+        this.name = name;
+        if(health > 0 && health <= 100)
+            this.health = health;
+        this.weapon = weapon;
+    }
+
+    public void loseDamage(int damage)
+    {
+        this.health -= damage;
+        if(this.health <= 0)
+            System.out.printf("%d damage inflicated. Player is dead", damage);
+    }
+
+
+    public int getHealth()
+    {
+        return this.health;
+    }
+}
