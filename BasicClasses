@@ -1,0 +1,80 @@
+/* CREATE A BASIC STUDENT CLASS THAT USES PREDICATES, CONSTRUCTORS, SETTERS AND GETTERS */
+
+package com.company;
+public class Main
+{
+
+    public static void main(String[] args)
+    {
+        Student student1 = new Student();
+
+        student1.setFirstName("Darlene");
+        student1.setStudentID(123);
+        student1.setGpa(2.5);
+        System.out.println("First name = " + student1.getFirstName() + "\n" + "Student ID = " + student1.getStudentID() + "\n"
+                            + "GPA = " + student1.getGpa());
+
+        System.out.println(student1.isPassing(2.4)); // false, is failing cus passing gpa is 2.5
+
+    }
+}
+=======================================================================================================================
+
+/* STUDENT CLASS */
+package com.company;
+
+public class Student
+{
+    private String firstName;
+    private int studentID;
+    private double gpa;
+
+    public Student()
+    {
+        this.firstName = null;
+        this.studentID = 000;
+        this.gpa = 0.0;
+    }
+
+    public Student(String firstName, int studentID, double gpa)
+    {
+        this.firstName = firstName;
+        this.studentID = studentID;
+        this.gpa = gpa;
+    }
+
+    public void setGpa(double gpa)
+    {
+        this.gpa = gpa;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    public void setStudentID(int studentID)
+    {
+        this.studentID = studentID;
+    }
+
+    public double getGpa()
+    {
+        return this.gpa;
+    }
+
+    public String getFirstName()
+    {
+        return this.firstName;
+    }
+
+    public int getStudentID()
+    {
+        return this.studentID;
+    }
+
+    public boolean isPassing(double passingGpa)
+    {
+        return(gpa >= passingGpa);
+    }
+}
