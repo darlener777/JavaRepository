@@ -1,0 +1,115 @@
+/* USE A CLASS TO INITIALIZE A BANK ACCOUNT AND HAVE 2 PREDICATE FUNCTIONS. 1 FOR DEPOSIT AND 1 FOR WITHDRAW. CAN'T WITHDRAW IF THERE
+IS NOT ENOUGH FUNDS IN BANK ACCOUNT */
+
+package com.company;
+public class Main
+{
+
+    public static void main(String[] args)
+    {
+        BankAccountInfo darleneInfo = new BankAccountInfo("777", 300.50,"Dee,", "gmail.com", "408408408");
+        System.out.println(darleneInfo.getBalance());
+        darleneInfo.withdraw(100);
+        darleneInfo.deposit(500.78);
+        darleneInfo.withdraw(900); // doesnt process because there is only 701.28 in bank account
+    }
+}
+
+===========================================================================================================
+
+package com.company;
+
+public class BankAccountInfo
+{
+    private String accountNumber;
+    private double balance;
+    private String customerName;
+    private String customerEmail;
+    private String phoneNumber;
+
+    public BankAccountInfo()
+    {
+        this.accountNumber = "123";
+        this.balance = 10.00;
+        this.customerName = "Unknown";
+        this.customerEmail = "Unknown";
+        this.phoneNumber = "Unknown";
+    }
+
+    public BankAccountInfo(String accountNumber, double balance, String customerName, String customerEmail, String phoneNumber)
+    {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAccountNumber(String accountNumber)
+    {
+        this.accountNumber = accountNumber;
+    }
+
+    public void setBalance(double balance)
+    {
+        this.balance = balance;
+    }
+
+    public void setCustomerName(String customerName)
+    {
+        this.customerName = customerName;
+    }
+
+    public void setCustomerEmail(String customerEmail)
+    {
+        this.customerEmail = customerEmail;
+    }
+
+    public void setPhoneNumber(String phoneNumber)
+    {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAccountNumber()
+    {
+        return accountNumber;
+    }
+
+    public double getBalance()
+    {
+        return balance;
+    }
+
+    public String getCustomerName()
+    {
+        return customerName;
+    }
+
+    public String getCustomerEmail()
+    {
+        return customerEmail;
+    }
+
+    public String getPhoneNumber()
+    {
+        return phoneNumber;
+    }
+
+    public void deposit(double depositAmount)
+    {
+        balance += depositAmount;
+        System.out.printf("Deposit of %.2f was made. New balance is %.2f\n", depositAmount,balance);
+    }
+
+    public void withdraw(double withdrawAmount)
+    {
+        if(balance - withdrawAmount < 0)
+            System.out.println("Only " + balance + " available. Withdrawal not processed...");
+        else
+        {
+            balance -= withdrawAmount;
+            System.out.printf("Withdrawal of %.2f was made. Remaining balance is %.2f\n", withdrawAmount, balance);
+        }
+    }
+}
+
