@@ -1,0 +1,547 @@
+package com.company;
+public class Main
+{
+
+    public static void main(String[] args)
+    {
+        SavingsAccount s1 = new SavingsAccount("111", 5000.00, 3.5);
+        System.out.println(s1);
+        System.out.println(s1.withdraw(50)); // withdraws 50 from 5000
+        System.out.println(s1);
+
+        Account a1 = new Account("222", 200.00);
+        a1.deposit(400); // deposit 400
+        a1.withdraw(25); // withdraw 25
+        a1.withdraw(1000);  // withdraw 1000, total is in negative state so it returns
+        System.out.println(a1); // insufficient funds
+
+        LongTermSavingsAccount l1 = new LongTermSavingsAccount();
+        l1.flag(); // it returns no deposit or withdraws cus flag is set to false
+        l1.withdraw(100); // doesnt withdraw anything cus it has no money
+        System.out.println(l1.getBalance()); // 0.0
+    }
+}
+
+=====================================================================================================
+
+/* ACCOUNT CLASS */
+
+package com.company;
+
+import java.time.LocalDateTime;
+
+public class Account
+{
+    protected String id;
+    protected double balance;
+    protected DateTime dateCreated;
+
+    // get the current date and time
+    protected void setDateCreated()
+    {
+        LocalDateTime now = LocalDateTime.now();
+        dateCreated = new DateTime(now.getMonthValue(), now.getDayOfMonth(), now.getYear(), now.getHour(), now.getMinute(), now.getSecond());
+    }
+
+    public Account()
+    {
+        this.id = "****";
+        this.balance = 0.0;
+        setDateCreated();
+    }
+
+    public Account(String id)
+    {
+        this.id = id;
+        this.balance = 0.0;
+        setDateCreated();
+    }
+
+    public Account(String id, double balance)
+    {
+        this.id = id;
+        this.balance = balance;
+    }
+
+    public Account(Account account)
+    {
+        this.id = account.getId();
+        this.balance = account.getBalance();
+        dateCreated = account.getDateCreated();
+    }
+
+    public String getId()
+    {
+        return this.id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+
+    public double getBalance()
+    {
+        return this.balance;
+    }
+
+    public DateTime getDateCreated()
+    {
+        return new DateTime(dateCreated);
+    }
+
+    public boolean deposit(double amount)
+    {
+        balance += amount;
+        return true;
+    }
+
+    public boolean withdraw(double amount)
+    {
+        if(amount > balance) // negative balance
+        {
+            System.out.println("Insufficient funds.... Negative balance");
+            return false;
+        }
+        balance -= amount;
+        return true;
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("%s: $%.2f and was created on %s", id, balance, dateCreated);
+    }
+}
+
+=====================================================================================================
+
+/* SAVINGS ACCOUNT */
+package com.company;
+
+public class SavingsAccount extends Account
+{
+    // inherites properties from the account class plus these
+    private double interestRate;
+    private int withdrawCount;
+
+    public SavingsAccount()
+    {
+        super(); // gets default constructor from Account class
+        this.interestRate = 0.0;
+        this.withdrawCount = 0;
+    }
+
+    public SavingsAccount(String id, double balance, double interestRate)
+    {
+        super(id, balance);
+        this.interestRate = interestRate;
+        this.withdrawCount = 0;
+    }
+
+    public SavingsAccount(SavingsAccount account)
+    {
+        super(account); // overload constructor from account class
+        this.interestRate = account.getInterestRate();
+        this.withdrawCount = account.getWithdrawCount();
+    }
+
+    public void setInterestRate(double interestRate)
+    {
+        this.interestRate = interestRate;
+    }
+
+    public void applyInterest()
+    {
+        balance += balance * (interestRate / 100);
+    }
+
+    public void incrementWithdrawCount()
+    {
+        withdrawCount++;
+    }
+
+    public void resetWithdrawCount()
+    {
+        withdrawCount = 0;
+    }
+
+    public double getInterestRate()
+    {
+        return interestRate;
+    }
+
+    public int getWithdrawCount()
+    {
+        return withdrawCount;
+    }
+
+    public boolean deposit(double amount)
+    {
+        balance += amount;
+        return true;
+    }
+
+    @Override
+    public boolean withdraw(double amount)
+    {
+        // negative state or too many withdrawals
+        if(amount > balance || withdrawCount == 3)
+        {
+            // keep track of negative amount
+            balance -= amount;
+            return false; // dont do transaction
+        }
+        balance -= amount;
+        withdrawCount++; // add to withdraws
+        return true;
+    }
+
+    public boolean withdraw()
+    {
+        return true;
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("Id: %s\nBalanace: $%.2f at %.2f%% interest rate has %d withdraws and was created on %s", id,balance,interestRate,withdrawCount,dateCreated);
+    }
+}
+
+=====================================================================================================
+
+/* LONGTERMSAVINGSACCOUNT CLASS */
+package com.company;
+
+public class LongTermSavingsAccount extends Account
+{
+    private double deposit;
+    private double withdraw;
+    boolean flag = false; // set to false so it doesnt allow withdraws
+
+    public LongTermSavingsAccount()
+    {
+        super();
+        deposit = 0.0;
+        withdraw = 0.0;
+    }
+
+    public LongTermSavingsAccount(double deposit, double withdraw)
+    {
+        super();
+        this.deposit = deposit;
+        this.withdraw = withdraw;
+    }
+
+    public void setDeposit(double deposit)
+    {
+        this.deposit = deposit;
+    }
+
+    public void setWithdraw(double withdraw)
+    {
+        this.withdraw = withdraw;
+    }
+
+    public double getDeposit()
+    {
+        return deposit;
+    }
+
+    public double getWithdraw()
+    {
+        return withdraw;
+    }
+
+    public boolean flag()
+    {
+        if(flag == false)
+        {
+            System.out.println("No deposits or withdraws are allowed exiting....");
+            return false;
+        }
+        else
+            System.out.println("Only withdraws are allowed");
+        return true;
+    }
+
+    @Override
+    public boolean withdraw(double amount)
+    {
+        if(flag == false)
+            return false;
+        else
+            return false;
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("%s: $%.2f and was created on %s", id,balance,dateCreated);
+    }
+}
+
+=====================================================================================================
+/* CHECKINGACCOUNT CLASS 
+package com.company;
+
+public class CheckingAccount extends Account
+{
+    private String routingNumber;
+
+    public CheckingAccount()
+    {
+        super();
+        routingNumber = "123456789";
+    }
+
+    public CheckingAccount(String routingNumber)
+    {
+        super();
+        this.routingNumber = routingNumber;
+    }
+
+    public CheckingAccount(String id, String routingNumber)
+    {
+        super(id);
+        this.routingNumber = routingNumber;
+    }
+
+    public CheckingAccount(String id, double balance, String routingNumber)
+    {
+        super(id,balance);
+        this.routingNumber = routingNumber;
+    }
+
+    public void setRoutingNumber(String routingNumber)
+    {
+        this.routingNumber = routingNumber;
+    }
+
+    public String getRoutingNumber()
+    {
+        return routingNumber;
+    }
+
+    @Override
+    public double getBalance()
+    {
+        return balance;
+    }
+
+    @Override
+    public boolean withdraw(double amount)
+    {
+        if(amount > balance)
+        {
+            System.out.println("Insufficient funds.\nBal: ");
+            return false;
+        }
+        balance -= amount;
+        return true;
+    }
+
+    @Override
+    public boolean deposit(double amount)
+    {
+        balance += amount;
+        return true;
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("%s's routing number: %s\nBal: $%.2f", id,routingNumber,balance);
+    }
+}
+=====================================================================================================
+/* TIME CLASS */
+package com.company;
+
+public class Time
+{
+    private int hour;
+    private int minute;
+    private int second;
+
+    public Time()
+    {
+        hour = 0;
+        minute = 0;
+        second = 0;
+    }
+
+    public Time(int hour, int minute, int second)
+    {
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+    }
+
+    public Time(Time time)
+    {
+        hour = time.getHour();
+        minute = time.getMinute();
+        second = time.getSecond();
+    }
+
+    public void setHour(int hour)
+    {
+        this.hour = hour;
+    }
+
+    public void setMinute(int minute)
+    {
+        this.minute = minute;
+    }
+
+    public void setSecond(int second)
+    {
+        this.second = second;
+    }
+
+    public int getHour()
+    {
+        return hour;
+    }
+
+    public int getMinute()
+    {
+        return minute;
+    }
+
+    public int getSecond()
+    {
+        return second;
+    }
+
+    public String toString()
+    {
+        return String.format("%02d:%02d:%02d:", hour,minute,second);
+    }
+}
+=====================================================================================================
+/* DATETIME CLASS */
+package com.company;
+
+public class DateTime
+{
+    private int month;
+    private int day;
+    private int year;
+    private Time time;
+
+    public DateTime()
+    {
+        month = 1;
+        day = 1;
+        year = 1990;
+        time = new Time();
+    }
+
+    public DateTime(int month, int day, int year)
+    {
+        this.month = month;
+        this.day = day;
+        this.year = year;
+        time = new Time();
+    }
+
+    public DateTime(int month, int day, int year, Time time)
+    {
+        this.month = month;
+        this.day = day;
+        this.year = year;
+        time = new Time();
+    }
+
+    public DateTime(DateTime dateTime)
+    {
+        month = dateTime.getMonth();
+        day = dateTime.getDay();
+        year = dateTime.getYear();
+        time = new Time(dateTime.getTime());
+    }
+
+    public DateTime(int month, int day, int year, int hour, int minute, int second)
+    {
+        this.month = month;
+        this.day = day;
+        this.year = year;
+        time = new Time(hour,minute,second);
+    }
+
+    public void setMonth(int month)
+    {
+        this.month = month;
+    }
+
+    public void setDay(int day)
+    {
+        this.day = day;
+    }
+
+    public void setYear(int year)
+    {
+        this.year = year;
+    }
+
+    public void setHour(int hour)
+    {
+        time.setHour(hour);
+    }
+
+    public void setMinute(int minute)
+    {
+        time.setMinute(minute);
+    }
+
+    public void setSecond(int second)
+    {
+        this.setSecond(second);
+    }
+
+    public void setTime(Time time)
+    {
+        time.setHour(time.getHour());
+        time.setMinute(time.getMinute());
+        time.setSecond(time.getSecond());
+    }
+
+    public int getMonth()
+    {
+        return month;
+    }
+
+    public int getDay()
+    {
+        return day;
+    }
+
+    public int getYear()
+    {
+        return year;
+    }
+
+    public int getHour()
+    {
+        return time.getHour();
+    }
+
+    public int getMinute()
+    {
+        return time.getMinute();
+    }
+
+    public int getSecond()
+    {
+        return time.getSecond();
+    }
+
+    public String toString()
+    {
+        return String.format("%02d/%02d/%04d %s", month,day,year,time);
+    }
+}
+=====================================================================================================
