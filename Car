@@ -1,0 +1,109 @@
+package com.company;
+public class Main
+{
+
+    public static void main(String[] args)
+    {
+        // create car objects
+        Car prius = new Car();
+        Car honda = new Car("Honda", "Civic", 2018, 2, "Metallic Grey");
+        Car unknownCar = new Car();
+
+        prius.setMake("Prius");
+        prius.setColor("Black");
+        prius.setYear(2015);
+
+        System.out.println("Car Info");
+        System.out.println();
+        System.out.println("Prius properties \n" + prius);
+        System.out.println("Honda properties \n" + honda);
+        System.out.println("Unknown car properties \n" + unknownCar);
+    }
+}
+
+================================================================================================
+/* CAR CLASS */
+
+package com.company;
+
+public class Car
+{
+    private String model;
+    private String make;
+    private int year;
+    private int doors;
+    private String color;
+
+    public Car()
+    {
+        model = "N/A";
+        make = "N/A";
+        year = 0000;
+        doors = 0;
+        color = "N/A";
+    }
+
+    public Car(String model, String make, int year, int doors, String color)
+    {
+        this.model = model;
+        this.make = make;
+        this.year = year;
+        this.doors = doors;
+        this.color = color;
+    }
+
+    public void setModel(String model)
+    {
+        this.model = model;
+    }
+
+    public void setMake(String make)
+    {
+        this.make = make;
+    }
+
+    public void setYear(int year)
+    {
+        this.year = year;
+    }
+
+    public void setDoors(int doors)
+    {
+        this.doors = doors;
+    }
+
+    public void setColor(String color)
+    {
+        this.color = color;
+    }
+
+    public String getModel()
+    {
+        return model;
+    }
+
+    public String getMake()
+    {
+        return make;
+    }
+
+    public int getYear()
+    {
+        return year;
+    }
+
+    public int getDoors()
+    {
+        return doors;
+    }
+
+    public String getColor()
+    {
+        return color;
+    }
+
+    public String toString()
+    {
+        return String.format("Model: %s\nMake: %s\nYear: %d\nColor: %s\nDoors: %d", model,make,year,color,doors);
+    }
+}
