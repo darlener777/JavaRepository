@@ -1,0 +1,58 @@
+package com.company;
+
+import javax.swing.*;
+
+public class Main
+{
+
+    public static void main(String[] args)
+    {
+        // create a draw smiley object 
+        DrawSmiley happyFace = new DrawSmiley();
+        // create jFrame object
+        JFrame application = new JFrame();
+        
+        // to close the window when x is clicked 
+        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        application.add(happyFace); // adds all our happy face functions in drawSmiley class to panel
+        application.setSize(200,250); // set the size of the window
+        application.setVisible(true); // allows us to see it 
+    }
+}
+================================================================================================
+/* DRAWSMILEY CLASS */
+
+package com.company;
+
+import javax.swing.*;
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class DrawSmiley extends JPanel
+{
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g); // need to paint
+
+        // draw the face
+        g.setColor(Color.YELLOW);
+        // used to set the oval to the center of the page
+        g.fillOval(10,10,200,200);
+
+        // draw the eyes
+        g.setColor(Color.BLACK);
+        // set the 2 eyes on the page
+        g.fillOval(55,65,30,30);
+        g.fillOval(135,65,30,30);
+
+        // draw the mouth
+        g.fillOval(50,110,120,60);
+
+        // touch up the mouth to a smile
+        g.setColor(Color.YELLOW);
+        // creates the mouth
+        g.fillRect(50,110,120,30);
+        g.fillOval(50,120,120,40);
+    }
+}
