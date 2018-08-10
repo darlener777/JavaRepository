@@ -1,0 +1,117 @@
+/* USING POLYMORPHISM CREATE AN ARRAY OF SHAPES AND FIND OUT EACH SHAPES AREA */
+
+package com.company;
+
+public class Main
+{
+
+    public static void main(String[] args)
+    {
+        // create a shape array
+        Shape[] shapes = new Shape[15];
+        // instantiate shapes
+        shapes[0] = new Circle(5.0);
+        shapes[1] = new Square(3.5);
+        shapes[2] = new Rectangle(3,4);
+        // the other 12 are null pointers
+        int numberOfShapes = 3;
+
+        // find the total area of all the objects
+        double sum = 0.0;
+        for(int counter = 0; counter < numberOfShapes; counter++)
+        {
+            // running sum of the shapes area
+            sum += shapes[counter].calculateArea();
+            // print out area
+            System.out.println(shapes[counter].calculateArea()); // print out each shapes area
+        }
+        System.out.println(sum);
+    }
+}
+=====================================================================================================================================================
+/* SHAPE CLASS */
+package com.company;
+
+public abstract class Shape
+{
+    // abstract classes usually do not have properties and usually have methods that are overridden
+    // the subclasses share this common method cus all shapes have an area but
+    // have different ways to calculate the area
+
+    public abstract double calculateArea();
+}
+=====================================================================================================================================================
+/* RECTANGLE CLASS */
+package com.company;
+
+public class Rectangle extends Shape
+{
+    private double length;
+    private double width;
+
+    public Rectangle()
+    {
+        length = 0.0;
+        width = 0.0;
+    }
+
+    public Rectangle(double length, double width)
+    {
+        this.length = length;
+        this.width = width;
+    }
+
+    @Override
+    public double calculateArea()
+    {
+        return length * width;
+    }
+}
+=====================================================================================================================================================
+/* CIRCLE */
+package com.company;
+
+public class Circle extends Shape
+{
+    private double radius;
+
+    public Circle()
+    {
+        radius = 0.0;
+    }
+
+    public Circle(double radius)
+    {
+        this.radius = radius;
+    }
+
+    @Override
+    public double calculateArea()
+    {
+        return 3.14 * radius * radius;
+    }
+}
+=====================================================================================================================================================
+/* SQUARE CLASS */
+package com.company;
+
+public class Square extends Shape
+{
+    private double side;
+
+    public Square()
+    {
+        side = 0.0;
+    }
+
+    public Square(double side)
+    {
+        this.side = side;
+    }
+
+    @Override
+    public double calculateArea()
+    {
+        return side * side;
+    }
+}
