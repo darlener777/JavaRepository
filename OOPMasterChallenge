@@ -1,0 +1,234 @@
+        // The purpose of the application is to help a fictitious company called Bills Burgers to manage
+        // their process of selling hamburgers.
+        // Our application will help Bill to select types of burgers, some of the additional items (additions) to
+        // be added to the burgers and pricing.
+        // We want to create a base hamburger, but also two other types of hamburgers that are popular ones in Bills store.
+        // The basic hamburger should have the following items.
+        // Bread roll type, meat and up to 4 additional additions (things like lettuce, tomato, carrot, etc) that
+        // the customer can select to be added to the burger.
+        // Each one of these items gets charged an additional price so you need some way to track how many items got added
+        // and to calculate the final price (base burger with all the additions).
+        // This burger has a base price and the additions are all separately priced (up to 4 additions, see above).
+        // Create a Hamburger class to deal with all the above.
+        // The constructor should only include the roll type, meat and price, can also include name of burger or you 
+        // can use a setter.
+        // Also create two extra varieties of Hamburgers (subclasses) to cater for 
+        // a) Healthy burger (on a brown rye bread roll), plus two addition items that can be added.
+        // The healthy burger can have 6 items (Additions) in total.
+        // hint:  you probably want to process the two additional items in this new class (subclass of Hamburger),
+        // not the base class (Hamburger), since the two additions are only appropriate for this new class
+        // (in other words new burger type).
+        // b) Deluxe hamburger - comes with chips and drinks as additions, but no extra additions are allowed.
+        // hint:  You have to find a way to automatically add these new additions at the time the deluxe burger
+        // object is created, and then prevent other additions being made.
+        //  All 3 classes should have a method that can be called anytime to show the base price of the hamburger
+        // plus all additionals, each showing the addition name, and addition price, and a grand/final total for the
+        // burger (base price + all additions)
+        // For the two additional classes this may require you to be looking at the base class for pricing and then
+        // adding totals to final price.
+        
+package com.company;
+
+
+public class Main
+{
+
+    public static void main(String[] args)
+    {
+        // basic hamburger
+        BasicHamburger h1 = new BasicHamburger("Basic Hamburger", "Wheat", "Sausage", 3.65);
+        // additional items on burger
+        h1.addHamburgerAddition1("Tomato", .27);
+        h1.addHamburgerAddition2("Onion", 1.12);
+        h1.addHamburgerAddition3("Lettuce", .50);
+        System.out.println("Total burger price is " + h1.totalPriceHamburger());
+
+        // healthy burger
+        HealthyBurger h2 = new HealthyBurger("Bacon", 5.67);
+        // additional items
+        h2.addHealthyAddition1("Egg", 5.43);
+        h2.addHealthyAddition2("Lentils", 3.41);
+        System.out.println("Total burger price is " + h2.totalPriceHamburger());
+
+        // deluxe burger
+        DeluxeBurger h3 = new DeluxeBurger();
+        System.out.println("Total burger price is " + h3.totalPriceHamburger());
+        h3.addHamburgerAddition1("Should not do this since it's overriden and blocked in deluxe class", 10.00);
+    }
+}
+
+================================================================================================
+/* BASIC BURGER */
+package com.company;
+
+public class BasicHamburger
+{
+    private String name;
+    private String bread;
+    private String meat;
+    private double price;
+
+    // charged an addition item + it's price
+    private String addition1Name;
+    private double addition1Price;
+    private String addition2Name;
+    private double addition2Price;
+    private String addition3Name;
+    private double addition3Price;
+    private String addition4Name;
+    private double addition4Price;
+
+    public BasicHamburger(String name, String bread, String meat, double price)
+    {
+        this.name = name;
+        this.bread = bread;
+        this.meat = meat;
+        this.price = price;
+    }
+
+    public void addHamburgerAddition1(String addition1Name, double addition1Price)
+    {
+        this.addition1Name = addition1Name;
+        this.addition1Price = addition1Price;
+    }
+
+    public void addHamburgerAddition2(String addition2Name, double addition2Price)
+    {
+        this.addition2Name = addition2Name;
+        this.addition2Price = addition2Price;
+    }
+
+    public void addHamburgerAddition3(String addition3Name, double addition3Price)
+    {
+        this.addition3Name = addition3Name;
+        this.addition3Price = addition3Price;
+    }
+
+    public void addHamburgerAddition4(String addition4Name, double addition4Price)
+    {
+        this.addition4Name = addition4Name;
+        this.addition4Price = addition4Price;
+    }
+
+    // add up the price of the hamburger
+    public double totalPriceHamburger()
+    {
+        // running sum
+        double hamburgerPrice = this.price;
+        System.out.printf(this.name + " on a " + this.bread + " roll with " + this.meat + ".Price :$ " + this.price + "\n");
+
+        // additions
+        if(this.addition1Name != null)
+        {
+            hamburgerPrice += this.addition1Price;
+            System.out.println("Added " + this.addition1Name + " for an extra " + this.addition1Price);
+        }
+
+        if(this.addition2Name != null)
+        {
+            hamburgerPrice += this.addition2Price;
+            System.out.println("Added " + this.addition2Name + " for an extra " + this.addition2Price);
+        }
+
+        if(this.addition3Name != null)
+        {
+            hamburgerPrice += this.addition3Price;
+            System.out.println("Added " + this.addition3Name + " for an extra " + this.addition3Price);
+        }
+
+        if(this.addition4Name != null)
+        {
+            hamburgerPrice += this.addition4Price;
+            System.out.println("Added " + this.addition4Name + " for an extra " + this.addition4Price);
+        }
+        return hamburgerPrice;
+    }
+
+}
+================================================================================================
+/* DELUXE BURGER */
+package com.company;
+
+public class DeluxeBurger extends BasicHamburger
+{
+    public DeluxeBurger()
+    {
+        super("Deluxe", "White", "Sausage & Bacon", 14.54); // hard coded
+        super.addHamburgerAddition1("Chips", 2.75);
+        super.addHamburgerAddition2("Drink", 1.00);
+    }
+
+    // doesnt allow the user to add any additional items
+    @Override
+    public void addHamburgerAddition1(String addition1Name, double Addition1Price)
+    {
+        System.out.println("Can't add additional items to the deluxe");
+    }
+
+    @Override
+    public void addHamburgerAddition2(String addition2Name, double Addition2Price)
+    {
+        System.out.println("Can't add additional items to the deluxe");
+    }
+
+    @Override
+    public void addHamburgerAddition3(String addition3Name, double Addition3Price)
+    {
+        System.out.println("Can't add additional items to the deluxe");
+    }
+
+    @Override
+    public void addHamburgerAddition4(String addition4Name, double Addition4Price)
+    {
+        System.out.println("Can't add additional items to the deluxe");
+    }
+}
+================================================================================================
+/* HEALTHY BURGER */
+package com.company;
+
+public class HealthyBurger extends BasicHamburger
+{
+    private String healthyExtraName1;
+    private double healthyExtraPrice1;
+    private String healthyExtraName2;
+    private double healthyExtraPrice2;
+
+    // hard code bread and burger name
+    public HealthyBurger(String meat, double price)
+    {
+        super("Healthy","Wheat", meat,price);
+    }
+
+    // to track additional things
+    public void addHealthyAddition1(String healthyExtraName1, double healthyExtraPrice1)
+    {
+        this.healthyExtraName1 = healthyExtraName1;
+        this.healthyExtraPrice1 = healthyExtraPrice1;
+    }
+
+    public void addHealthyAddition2(String healthyExtraName2, double healthyExtraPrice2)
+    {
+        this.healthyExtraName2 = healthyExtraName2;
+        this.healthyExtraPrice2 = healthyExtraPrice2;
+    }
+
+    @Override
+    public double totalPriceHamburger()
+    {
+        double hamburgerPrice = super.totalPriceHamburger();
+
+        if(this.healthyExtraName1 != null)
+        {
+            hamburgerPrice += this.healthyExtraPrice1;
+            System.out.println("Added " + this.healthyExtraName1 + " for an extra " + this.healthyExtraPrice1);
+        }
+
+        if(this.healthyExtraName2 != null)
+        {
+            hamburgerPrice += this.healthyExtraPrice2;
+            System.out.println("Added " + this.healthyExtraName2 + " for an extra " + this.healthyExtraPrice2);
+        }
+        return hamburgerPrice;
+    }
+}
