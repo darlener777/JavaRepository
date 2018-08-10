@@ -1,0 +1,168 @@
+package com.company;
+
+public class Main
+{
+
+    public static void main(String[] args)
+    {
+        // 2 date objects
+        Date day1 = new Date(); // uses default constructor
+        Date day2 = new Date(3,29,1994);
+
+        System.out.println(day1);
+        System.out.println(day2);
+
+        // 2 student objects
+        Student student1 = new Student(101,5,18,2012);
+        if(student1.isMillenial())
+            System.out.printf("Born after 2000" + "\n"); // prints out since student is born after 2000
+
+        // can i create a student object with a date object , sure but we have to be careful because this is call/pass
+        // by reference(pointers). we need to add a constructor in our student class this uses the actual object
+        // and not a copy of the date
+        Date day3 = new Date(2,29,1996);
+        Student student2 = new Student(102,day3);
+        System.out.println(student2);
+
+        day3.setDay(21); // now when we change day3 we change student 2 date of birth too
+        System.out.println(student2);
+
+        day2 = new Date(4,8,1960); // set new date
+        student2.setDateOfBirth(3,3,2000);
+        student2.setDateOfBirth(day2); // pass in day2 and set to 4/8/1960
+
+        Date day4 = new Date(4,8,1920);
+        student2.setDateOfBirth(day4); // sets student 2 to 4/8/1920
+        System.out.println(student2);
+    }
+}
+
+==================================================================================================================================================
+/* DATE CLASS */
+package com.company;
+
+public class Date
+{
+    private int month;
+    private int day;
+    private int year;
+
+    public Date()
+    {
+        month = 1;
+        day = 1;
+        year = 1990;
+    }
+
+    public Date(int month, int day, int year)
+    {
+        this.month = month;
+        this.day = day;
+        this.year = year;
+    }
+
+    // make a copy of an actual constructor
+    public Date(Date date)
+    {
+        month = date.getMonth();
+        month = date.getDay();
+        month = date.getYear();
+    }
+
+    public void setMonth(int month)
+    {
+        this.month = month;
+    }
+
+    public void setDay(int day)
+    {
+        this.day = day;
+    }
+
+    public void setYear(int year)
+    {
+        this.year = year;
+    }
+
+    public int getMonth()
+    {
+        return month;
+    }
+
+    public int getDay()
+    {
+        return day;
+    }
+
+    public int getYear()
+    {
+        return year;
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("%02d/%02d/%04d", month,day,year);
+    }
+}
+=====================================================================================================================================================
+/* STUDENT CLASS */
+package com.company;
+
+public class Student
+{
+    private int id;
+    private Date dateOfBirth;
+
+    public Student()
+    {
+        id = 1;
+        dateOfBirth = new Date(); // default constructor of date class 1/1/1990
+    }
+
+    public Student(int id, int month, int day, int year)
+    {
+        this.id = id;
+        dateOfBirth = new Date(month,day,year); // initializes date using 3 parameters
+    }
+
+    public Student(int id)
+    {
+        this.id = id;
+        dateOfBirth = new Date(); // 1/1/1990
+    }
+
+    public Student(int id, Date dateOfBirth)
+    {
+        this.id = id;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    // since month day and year are private in our Date class we can access them using setters
+    public void setDateOfBirth(int month, int day, int year)
+    {
+        dateOfBirth.setMonth(month);
+        dateOfBirth.setDay(day);
+        dateOfBirth.setYear(year);
+    }
+
+    // pass in reference to given date a copy version
+    public void setDateOfBirth(Date date)
+    {
+        dateOfBirth.setMonth(date.getMonth());
+        dateOfBirth.setDay(date.getDay());
+        dateOfBirth.setYear(date.getYear());
+    }
+
+    // check if student was born before 2000
+    public boolean isMillenial()
+    {
+        return (dateOfBirth.getYear() >= 2000);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Student: " + "\n" + "ID = " + id + "\n" + "DateOfBirth = " + dateOfBirth;
+    }
+}
