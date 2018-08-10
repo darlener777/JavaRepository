@@ -1,0 +1,181 @@
+/* USING POLYMORPHISM CREATE AN ARRAY OF DIFFERENT SHAPES ALONG WITH THEIR SURFACE AREA AND VOLUME. PRINT OUT EACH SHAPES SURFACE ARE AND 
+VOLUME ALONG WITH THE AVERAGE SURFACE AREA, THE TOTAL SUM OF ALL THE VOLUME AND SURFACE AREAS , AND 
+THE OBJECT WITH THE LARGEST SURFACE VOLUME */
+
+package com.company;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        // array with 10 spots
+        ThreeDimensionalShape[] shapes = new ThreeDimensionalShape[10];
+        shapes[0] = new Sphere(7.0);
+        shapes[1] = new Sphere(10.0);
+        shapes[2] = new Cone(2.0,5.0);
+        shapes[3] = new Cone(3.0,7.0);
+        shapes[4] = new RectangularPrism(2.0,3.0,4.0);
+        shapes[5] = new RectangularPrism(3.0,4.0,5.0);
+
+        int numberOfShapes = 6;
+        double sum = 0.0;
+        double averageSurfaceArea = 0.0;
+        double max = 0.0;
+        int index = 0;
+
+        // calculate each shapes volume
+        for(int counter = 0; counter < numberOfShapes; counter++)
+        {
+            // running sum of the volumes
+            sum += shapes[counter].calculateVolume();
+            // running sum of the SA
+            averageSurfaceArea += shapes[counter].calculateSurfaceArea() / numberOfShapes;
+
+            // prints out each shapes volume and SA
+            System.out.println("Volume: " + shapes[counter].calculateVolume());
+            System.out.println("Surface Area: " + shapes[counter].calculateSurfaceArea() + "\n");
+
+            // if the shapes volume is greater then the max
+            if(shapes[counter].calculateVolume() > max)
+            {
+                // if it's greater then we store it
+                max = shapes[counter].calculateVolume();
+                index = counter;
+            }
+        }
+
+        // prints out the total sum of all volumes and SA
+        System.out.println("==========================================================");
+        System.out.println("The average surface area is: " + averageSurfaceArea);
+        System.out.println("The toal sum of all volumes and surface areas: " + sum);
+        System.out.println("The object with the largest volume is: " + shapes[index].toString());
+    }
+}
+=====================================================================================================================================================
+
+/* THREEDIMSHAPE CLASS */
+package com.company;
+
+public abstract class ThreeDimensionalShape
+{
+    // subclasses have to use these 2 methods
+    public abstract double calculateVolume();
+    public abstract double calculateSurfaceArea();
+}
+=====================================================================================================================================================
+
+/* RECTANGULARPRISM CLASS */
+package com.company;
+
+public class RectangularPrism extends ThreeDimensionalShape
+{
+    private double width;
+    private double height;
+    private double length;
+
+    public RectangularPrism()
+    {
+        width = 0.0;
+        height = 0.0;
+        length = 0.0;
+    }
+
+    public RectangularPrism(double width, double height, double length)
+    {
+        this.width = width;
+        this.height = height;
+        this.length = length;
+    }
+
+    @Override
+    public double calculateVolume()
+    {
+        return width * height * length;
+    }
+
+    @Override
+    public double calculateSurfaceArea()
+    {
+        return 2 * (width * length + height * length + height * width);
+    }
+
+    public String toString()
+    {
+        return String.format("Rectangular prism with a %f width, %f height, and %f length", width,height,length);
+    }
+}
+=====================================================================================================================================================
+
+/* CONE CLASS */
+package com.company;
+
+public class Cone extends ThreeDimensionalShape
+{
+    private double radius;
+    private double height;
+
+    public Cone()
+    {
+        radius = 0.0;
+        height = 0.0;
+    }
+
+    public Cone(double radius, double height)
+    {
+        this.radius = radius;
+        this.height = height;
+    }
+
+    @Override
+    public double calculateVolume()
+    {
+        return Math.PI * radius * radius * height / 3;
+    }
+
+    @Override
+    public double calculateSurfaceArea()
+    {
+        return Math.PI * radius * (radius + Math.sqrt(height * height + radius * radius));
+    }
+
+    public String toString()
+    {
+        return String.format("Cone with a %f radius and %f height", radius,height);
+    }
+}
+=====================================================================================================================================================
+
+/* SPHERE CLASS */
+package com.company;
+
+public class Sphere extends ThreeDimensionalShape
+{
+    private double radius;
+
+    public Sphere()
+    {
+        radius = 0.0;
+    }
+
+    public Sphere(double radius)
+    {
+        this.radius = radius;
+    }
+
+    @Override
+    public double calculateVolume()
+    {
+        return (4.0 / 3) * Math.PI * radius * radius * radius;
+    }
+
+    @Override
+    public double calculateSurfaceArea()
+    {
+        return 4 * Math.PI * radius * radius;
+    }
+
+    public String toString()
+    {
+        return String.format("Sphere with a %f radius", radius);
+    }
+}
