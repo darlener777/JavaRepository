@@ -1,0 +1,229 @@
+package inheritanceudemy;
+
+public class InheritanceUdemy 
+{
+    public static void main(String[] args) 
+    {
+        // Animal object
+        // 1 brain, 1 body, 1 size, 5 weight, Animal name 
+        Animal animal = new Animal(1,1,1,5,"Animal");
+        
+        // Dog object that has 1 brain, 8 bodies, 20 size, 2 weight, Yorkie name, 1 eyes, 1 tail,
+        // 2 legs, 3 teeth, long silky coat
+        Dog dog = new Dog(1, 8,20,2,"Yorkie",1,1,2,3,"long silky"); 
+        
+        dog.eat(); // prints Dog.eat() called, Dog.chew() called & Animal.eat() called..every animal eats
+        dog.walk(); // prints Dog.walk() called, animal is moving at 5
+        dog.run(); // prints Dog.run() called, Dog.move() CALLED, Dog moved its' legs at 10 speed, animal is moving at 10
+    }
+}
+
+/* ANIMAL CLASS */
+package inheritanceudemy;
+
+public class Animal 
+{
+    // properties that every animal has 
+    private int brain;
+    private int body;
+    private int size;
+    private int weight;
+    private String name;
+
+    public Animal() 
+    {
+        brain = 1;
+        body = 1;
+        size = 100;
+        weight = 50;
+        name = "Unknown";
+    }
+
+    public Animal(int brain, int body, int size, int weight, String name) 
+    {
+        this.brain = brain;
+        this.body = body;
+        this.size = size;
+        this.weight = weight;
+        this.name = name;
+    }
+
+    public void setBrain(int brain) 
+    {
+        this.brain = brain;
+    }
+
+    public void setBody(int body) 
+    {
+        this.body = body;
+    }
+
+    public void setSize(int size) 
+    {
+        this.size = size;
+    }
+
+    public void setWeight(int weight) 
+    {
+        this.weight = weight;
+    }
+
+    public void setName(String name) 
+    {
+        this.name = name;
+    }
+    
+    public int getBrain() 
+    {
+        return brain;
+    }
+
+    public int getBody() 
+    {
+        return body;
+    }
+
+    public int getSize() 
+    {
+        return size;
+    }
+
+    public int getWeight() 
+    {
+        return weight;
+    }
+
+    public String getName() 
+    {
+        return name;
+    }
+    
+    public void eat()
+    {
+        System.out.println("Animal.eat() called..every animal eats");
+    }
+    
+    public void move(int speed)
+    {
+        System.out.println("animal is moving at " + speed);
+    }
+}
+
+/* FISH CLASS */
+package inheritanceudemy;
+
+public class Fish extends Animal 
+{
+    // properties related to the fish 
+    private int gills;
+    private int eyes;
+    private int fins;
+
+    public Fish(int gills, int eyes, int fins, int brain, int body, int size, int weight, String name) 
+    {
+        // gets the constructor from the super class 
+        super(brain, body, size, weight, name);
+        // properties related to fish
+        this.gills = gills;
+        this.eyes = eyes;
+        this.fins = fins;
+    }
+    
+    private void rest()
+    {
+        System.out.println("rest() is called...");
+    }
+    
+    private void moveMuscles()
+    {
+        System.out.println("moveMuscles() is called...");
+    }
+    
+    private void moveBackFin()
+    {
+        System.out.println("moveBackFin() is called...");
+    }
+    
+    private void swim(int speed)
+    {
+        moveMuscles();
+        moveBackFin();
+        super.move(speed);
+    }
+}
+
+/* DOG CLASS */
+package inheritanceudemy;
+
+// dog class inherits from animal 
+public class Dog extends Animal
+{
+    // properties unique to dog
+    private int eyes;
+    private int tail;
+    private int legs;
+    private int teeth;
+    private String coat;
+    
+    // default constructor 
+    public Dog(int brain, int body, int size, int weight, String name, int eyes, int tail,
+                int legs, int teeth, String coat) 
+    {
+        // gets the constructor from the super class
+        super(brain, body, size, weight, name);
+        // dog's own unique properties 
+        this.eyes = eyes;
+        this.tail = tail;
+        this.legs = legs;
+        this.teeth = teeth; 
+        this.coat = coat;
+    }
+    
+    // functions related to dogs 
+    private void chew()
+    {
+        System.out.println("Dog.chew() called");
+    }
+    
+    // use eat from animal class but make it unique for dog class 
+    @Override
+    public void eat()
+    {
+        // dont have to include super or any other class here
+        System.out.println("Dog.eat() called");
+        chew();
+        // when you put super in front of it it is telling us not to look at the 
+        // over ridden move function in dog class but only to look at it in super class
+        // nothing else
+        super.eat();
+    }
+    
+    public void walk()
+    {
+        System.out.println("Dog.walk() called");
+        // uses move function from super class
+        super.move(5);
+    }
+    
+    public void run()
+    {
+        System.out.println("Dog.run() called");
+        // uses move function below 
+        move(10);
+    }
+    
+    private void moveLegs(int speed)
+    {
+        System.out.println("Dog moved its' legs at " + speed + " speed");
+    }
+    
+    @Override 
+    public void move(int speed)
+    {
+        System.out.println("Dog.move() CALLED");
+        // uses function above moveLegs()
+        moveLegs(speed);
+        // goes into Animal class to move() funciton
+        super.move(speed);
+    }    
+}
