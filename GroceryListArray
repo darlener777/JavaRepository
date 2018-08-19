@@ -1,0 +1,190 @@
+package listandarraylist;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ListAndArrayList 
+{
+    // make a groceryList object to go into the class
+    private static GroceryList groceryList = new GroceryList();
+    public static Scanner scanner = new Scanner(System.in); 
+    
+    public static void main(String[] args) 
+    {
+        // sets quit to false 
+        boolean quit = false;
+        int choice = 0;
+        // print the menu once 
+        printInstructions();
+        
+        while(!quit)
+        {
+            System.out.println("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            
+            switch(choice)
+            {
+                case 0:
+                    printInstructions();
+                    break;
+                case 1:
+                    groceryList.printGroceryList();
+                    break;
+                case 2: 
+                    addItem();
+                    break;
+                case 3: 
+                    modifyItem();
+                    break;
+                case 4:
+                    removeItem();
+                    break;
+                case 5: 
+                    searchForItem();
+                    break;
+                case 6:
+                    quit = true;   // exits loop when we set quit to true  
+            }
+        }
+    }
+    
+    // main menu 
+    public static void printInstructions()
+    {
+        System.out.println("\n Press ");
+        System.out.println("\t 0 - To print choice options.");
+        System.out.println("\t 1 - To print the list of grocery items");
+        System.out.println("\t 2 - To add an item to the list");
+        System.out.println("\t 3 - To modify an item in the list");
+        System.out.println("\t 4 - To remove an item in the list");
+        System.out.println("\t 5 - To search for an item in the list");
+        System.out.println("\t 6 - To quit the application");
+    }
+    
+    // to add an item to list 
+    public static void addItem()
+    {
+        System.out.print("Please enter the grocery item: ");
+        // takes input and adds it to grocery list
+        groceryList.addGroceryItem(scanner.nextLine());
+    }
+    
+    // modifies item 
+    public static void modifyItem()
+    {
+        System.out.print("Current item name: ");
+        String itemNumber = scanner.nextLine(); // stores the current item name in itemNumber
+        System.out.println("Enter new item: "); 
+        String newItem = scanner.nextLine();    // gets the new item name and store it in newItem
+        // update the grocery list, goes into the GroceryList class to do this
+        groceryList.modifyGroceryItem(itemNumber, newItem);
+    }
+    
+    // removes an item 
+    public static void removeItem()
+    {
+        System.out.print("Enter item name: ");
+        String itemNumber = scanner.nextLine(); // stores the item name into itemNumber
+        // remove item from groceryList, goes into the GroceryList class to do this
+        groceryList.removeGroceryItem(itemNumber);
+    }
+    
+    // search for item
+    public static void searchForItem()
+    {
+        System.out.print("Item to search for: ");
+        String searchItem = scanner.nextLine(); // stores the item name into searchItem
+        // if the search item is found 
+        if(groceryList.onFile(searchItem))
+            System.out.println("Found " + searchItem + " in our grocery list");
+        else // if it isnt found
+            System.out.println(searchItem + " is not found in the grocery list");
+    }
+}
+
+/* GROCERYLIST CLASS */
+
+package listandarraylist;
+import java.util.ArrayList;
+
+public class GroceryList 
+{
+    // creates a array list with strings
+    private ArrayList<String> groceryList = new ArrayList<String>();
+    
+    // add a grocery item by name 
+    public void addGroceryItem(String item)
+    {
+        // adds item into array list 
+        groceryList.add(item);
+    }
+    
+    public ArrayList<String> getGroceryList()
+    {
+        return groceryList;
+    }
+    
+    // print out array
+    public void printGroceryList()
+    {
+        System.out.println("You have " + groceryList.size() + " items in your grocery list");
+        // goes through the grocerylist and prints out the number and name
+        for(int counter = 0; counter < groceryList.size(); counter++)
+        {
+            // we have to add one so it starts at 1 and not 0 // counter = the name of the item 
+            System.out.println((counter + 1) + ". " + groceryList.get(counter));
+        }
+    }
+    
+    // returns the position of the item 
+    public void modifyGroceryItem(String currentItem, String newItem)
+    {
+        int position = findItem(currentItem);
+        // if it does exist
+        if(position >= 0)
+        {
+            modifyGroceryItem(position,newItem);
+        }
+    }
+    
+    // modify / replace an item / update item
+    private void modifyGroceryItem(int position, String newItem)
+    {
+        // sets the position and item name to userInput 
+        groceryList.set(position, newItem);
+        System.out.println("Grocery item " + (position + 1) + " has been modified");
+    }
+    
+    public void removeGroceryItem(String item)
+    {
+        int position = findItem(item);
+        // if it does exist
+        if(position >= 0)
+        {
+            removeGroceryItem(position);
+        }
+    }
+    
+    // remove an item 
+    private void removeGroceryItem(int position)
+    {
+        String theitem = groceryList.get(position);
+        groceryList.remove(position);
+    }
+    
+    // query an array list to find items 
+    private int findItem(String searchItem)
+    {
+        // returns an int if it does exist its gonna return a number 0 or greater
+        // if it deosnt it gonna return < 0 
+        return groceryList.indexOf(searchItem);
+    }
+    
+    public boolean onFile(String searchItem)
+    {
+        // getting search item
+        int position = findItem(searchItem);
+        // if it is there
+        return position >= 0; // if it isnt there
+    }
+}
