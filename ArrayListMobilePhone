@@ -1,0 +1,295 @@
+package com.company;
+import java.util.Scanner;
+
+public class Main
+{
+    private static Scanner scanner = new Scanner(System.in);
+    private static MobilePhone mobilePhone = new MobilePhone("4083872032");
+
+    public static void main(String[] args)
+    {
+        // Create a program that implements a simple mobile phone with the following capabilities.
+        // Able to store, modify, remove and query contact names.
+        // You will want to create a separate class for Contacts (name and phone number).
+        // Create a master class (MobilePhone) that holds the ArrayList of Contacts
+        // The MobilePhone class has the functionality listed above.
+        // Add a menu of options that are available.
+        // Options:  Quit, print list of contacts, add new contact, update existing contact, remove contact
+        // and search/find contact.
+        // When adding or updating be sure to check if the contact already exists (use name)
+        // Be sure not to expose the inner workings of the Arraylist to MobilePhone
+        // e.g. no ints, no .get(i) etc
+        // MobilePhone should do everything with Contact objects only.
+
+        boolean quit = false;
+        startPhone();
+        printActions();
+
+        while(!quit)
+        {
+            System.out.println("\nEnter action: (6 to show available actions)");
+            int userInput = scanner.nextInt();
+            scanner.nextLine();
+            switch (userInput)
+            {
+                case 0:
+                    System.out.println("\nShutting down...");
+                    quit = true;
+                    break;
+                case 1:
+                    mobilePhone.printContacts();
+                    break;
+                case 2:
+                    addNewContact();
+                    break;
+                case 3:
+                    updateContact();
+                    break;
+                case 4:
+                    removeContact();
+                    break;
+                case 5:
+                    queryContact();
+                    break;
+                case 6:
+                    printActions();
+                    break;
+                default:
+                        System.out.println("Wrong entry. Try again");
+            }
+        }
+    }
+
+    private static void addNewContact()
+    {
+        System.out.println("Enter new contact name: ");
+        String name = scanner.nextLine();
+        System.out.println("Enter phone number: ");
+        String phone = scanner.nextLine();
+
+        // create name and phone number from user input
+        Contact newContact = Contact.createContact(name,phone);
+
+        if(mobilePhone.addNewContact(newContact))
+            System.out.println("New contact added: " + name + " , phone = " + phone);
+        else
+            System.out.println("Can't add, " + name + " alreay on file");
+    }
+
+    private static void updateContact()
+    {
+        System.out.println("Enter existing contact name: ");
+        String name = scanner.nextLine();
+
+        Contact existingContactRecord = mobilePhone.queryContact(name);
+
+        if(existingContactRecord == null)
+        {
+            System.out.println("Contact not found");
+            return; // returns null
+        }
+
+        System.out.println("Enter new contact name: ");
+        String newName = scanner.nextLine();
+        System.out.println("Enter new phone number: ");
+        String newNumber = scanner.nextLine();
+
+        Contact newContact = Contact.createContact(newName,newNumber);
+        if(mobilePhone.updateContact(existingContactRecord, newContact))
+            System.out.println("Successfully updated record");
+        else
+            System.out.println("Error updating record");
+    }
+
+    private static void removeContact()
+    {
+        System.out.println("Enter existing contact name: ");
+        String name = scanner.nextLine();
+
+        Contact existingContactRecord = mobilePhone.queryContact(name);
+
+        if(existingContactRecord == null)
+        {
+            System.out.println("Contact not found");
+            return; // if we get to here it does exist
+        }
+
+        if(mobilePhone.removeContact(existingContactRecord))
+            System.out.println("Successfully deleted record");
+        else
+            System.out.println("Error deleting record");
+    }
+
+    private static void queryContact()
+    {
+        System.out.println("Enter existing contact name: ");
+        String name = scanner.nextLine();
+
+        Contact existingContactRecord = mobilePhone.queryContact(name);
+
+        if(existingContactRecord == null)
+        {
+            System.out.println("Contact not found");
+            return;
+        }
+
+        System.out.println("Name: " + existingContactRecord.getName() + " phone number is " + existingContactRecord.getNumber());
+    }
+
+    private static void startPhone()
+    {
+        System.out.println("Starting phone");
+    }
+
+    private static void printActions()
+    {
+        System.out.println("\n Press ");
+        System.out.println("\t 0 - Shutdown.");
+        System.out.println("\t 1 - Print contacts");
+        System.out.println("\t 2 - Add new contact");
+        System.out.println("\t 3 - Update an existing contact");
+        System.out.println("\t 4 - Remove existing contact");
+        System.out.println("\t 5 - Query if an existing contact exists");
+        System.out.println("\t 6 - To print a list of available actions");
+        System.out.printf("Choose your action: ");
+    }
+}
+
+/* MOBILE PHONE CLASS */
+package com.company;
+
+import java.util.ArrayList;
+
+public class MobilePhone
+{
+    private String myNumber;
+    private ArrayList<Contact> myContacts; // array list of contacts
+
+    public MobilePhone(String myNumber)
+    {
+        this.myNumber = myNumber;
+        // initialize array
+        this.myContacts = new ArrayList<Contact>();
+    }
+
+    // add a new contact to phone
+    public boolean addNewContact(Contact contact)
+    {
+        if(findContact(contact.getName()) >= 0)
+        {
+            System.out.println("Contact is already on file");
+            return false;
+        }
+        myContacts.add(contact); // adds contact
+        return true; // successfully added number
+    }
+
+    public boolean removeContact(Contact contact)
+    {
+        int foundPosition = findContact(contact);
+        if(foundPosition < 0) // not in array
+        {
+            System.out.println(contact.getName() + " was not found");
+            return false;
+        }
+        this.myContacts.remove(foundPosition);
+        System.out.println(contact.getName() + " was deleted");
+        return true;
+    }
+
+    private int findContact(Contact contact)
+    {
+        return this.myContacts.indexOf(contact); // return an integer showing us the elemnt position in the array which
+        // is 0 or greater and if it doesnt exist it will return less than 0
+    }
+
+    private int findContact(String contactName)
+    {
+        for(int counter = 0; counter < myContacts.size(); counter++)
+        {
+            Contact contact = this.myContacts.get(counter); // get contact object thats in the array list
+            if(contact.getName().equals(contactName)) // if the contact matches the contact name
+                return counter; // return position in array which is >= 0
+        }
+        return -1;
+    }
+
+    public String queryContact(Contact contact)
+    {
+        if(findContact(contact) >= 0) // if it's in array // uses int findContact(Contact contact_
+            return contact.getName(); // return contact name
+        return null;
+    }
+
+    public Contact queryContact(String name)
+    {
+        int position = findContact(name);
+        if(position >= 0)
+            return this.myContacts.get(position); // return the contact object thats in that position
+        return null;
+    }
+
+    // searches for old contact and replaces it with new one
+    public boolean updateContact(Contact oldContact, Contact newContact)
+    {
+        int foundPosition = findContact(oldContact);
+        if(foundPosition < 0) // not in array
+        {
+            System.out.println(oldContact.getName() + " was not found");
+            return false;
+        }
+        else if(findContact(newContact.getName()) != -1); // doesn't allow to of the same names
+        {
+            System.out.println("Contact with name " + newContact.getName() +
+                    " already exists. Update was not successful");
+            return false;
+        }
+
+        // the name wasn't found and we are able to do this
+        this.myContacts.set(foundPosition, newContact); // replace old record with new one
+        System.out.println(oldContact.getName() + " was replaced with " + newContact.getName());
+        return true;
+    }
+
+    public void printContacts()
+    {
+        System.out.println("Contact list");
+        for(int counter = 0; counter < this.myContacts.size(); counter++)
+        {
+            System.out.println((counter + 1) + "." +
+                    this.myContacts.get(counter).getName() + " -> " + // get name from contact in array along with number
+                    this.myContacts.get(counter).getNumber());
+        }
+    }
+}
+
+/* CONTACT CLASS */
+package com.company;
+
+public class Contact
+{
+    private String name;
+    private String number;
+
+    public Contact(String name, String number)
+    {
+        this.name = name;
+        this.number = number;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getNumber()
+    {
+        return number;
+    }
+
+    // call the contact constructor to create a new contact
+    public static Contact createContact(String name, String phoneNumber)
+    {
+        return new Contact(name, phoneNumber);
+    }
+}
